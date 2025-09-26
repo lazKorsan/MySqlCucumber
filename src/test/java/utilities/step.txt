@@ -1,0 +1,20 @@
+   @When("kullanici cron_schedules tablosundaki {string} bilgilerini sorgular")
+    public void kullanici_cron_schedules_tablosundaki_bilgilerini_sorgular(String columnName) {
+        // .feature dosyasından gelen "name" parametresini kullanarak sorguyu dinamik oluşturuyoruz.
+        String query = "SELECT " + columnName + " FROM cron_schedules";
+        resultSet = JDBCReusableMethods.executeMyQuery(query);
+    }
+
+    @Then("ilk iki ismin {string} ve {string} olduğunu doğrular")
+    public void ilk_iki_ismin_ve_olduğunu_doğrular(String expectedIlkIsim, String expectedIkinciIsim) throws SQLException {
+        // Gelen sonuçları kontrol etmek için
+        List<String> actualNames = new ArrayList<>();
+        while(resultSet.next()) {
+            actualNames.add(resultSet.getString("name"));
+        }
+
+        // Beklenen ve gerçek sonuçları karşılaştırıyoruz.
+        Assert.assertTrue(actualNames.size() >= 2, "Sonuçlarda en az 2 isim bulunamadı.");
+        Assert.assertEquals(actualNames.get(0), expectedIlkIsim);
+        Assert.assertEquals(actualNames.get(1), expectedIkinciIsim);
+    }
