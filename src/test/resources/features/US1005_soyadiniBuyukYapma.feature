@@ -1,6 +1,6 @@
 
 Feature: US1005 users tablosu soyisim testi
-@testication
+
   Scenario: TC05 kullanici soyisimleri buyuk harfe cevirebilmeli
 
     Given kullanici loantech database'ine baglanir

@@ -4,6 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.testng.Assert;
+import utilities.DatabaseUtility;
 import utilities.JDBCReusableMethods;
 
 import java.sql.ResultSet;
@@ -81,5 +82,32 @@ public class loantechStepdefinitions {
         System.out.println("Sorgu sonucu bulunan emailler: " + actualValues);
         // Listenin, beklenen değeri içerip içermediğini kontrol ediyoruz.
         Assert.assertTrue(actualValues.contains(expectedValue), "Email listesinde '" + expectedValue + "' bulunamadı.");
+    }
+
+    // < -- ================ US1005 ======================== -- >
+
+    @When("users tablosunda username'i {string} olan kaydın soyadini büyük harfe çevirir")
+    public void users_tablosunda_username_i_olan_kaydın_soyadini_büyük_harfe_çevirir(String string) {
+        String query = "update users set username = 'darkdark' where  username ='DARKDARK';";
+        DatabaseUtility.executeQuery(query);
+
+    }
+
+    @Then("Update işlemi sonucunda username'i {string} olan kaydın soyisim değerinin büyük harfe dönüştüğünü test eder")
+    public void update_işlemi_sonucunda_username_i_olan_kaydın_soyisim_değerinin_büyük_harfe_dönüştüğünü_test_eder(String string){
+        String query = "SELECT lastname FROM users WHERE username = '" + string + "'";
+        resultSet = JDBCReusableMethods.executeMyQuery(query);
+
+    }
+
+
+    @Given("kullanıcı bazi testler yapar")
+    public void kullanıcıBaziTestlerYapar() {
+
+        DatabaseUtility.createConnection();
+        String query = "update users set username = 'darkdark' where  username ='Darkdark';";
+        DatabaseUtility.executeQuery(query);
+
+        DatabaseUtility.closeConnection();
     }
 }
