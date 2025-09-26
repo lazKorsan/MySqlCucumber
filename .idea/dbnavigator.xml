@@ -36,6 +36,21 @@ select name from cron_schedules;
 
 select email from subscribers;
 
+select * from users
+
+select * from users;
+
+select * from users;
+
+UPDATE users 
+SET username = 'darkdark' 
+WHERE username = 'ceylen';
+
+
+
+
+select * from users;
+
 select * from users;]]></console>
     </connection>
   </component>
@@ -43,9 +58,7 @@ select * from users;]]></console>
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="000299d3-f2d5-4ad3-8adb-4d389035ee45" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="000299d3-f2d5-4ad3-8adb-4d389035ee45" />

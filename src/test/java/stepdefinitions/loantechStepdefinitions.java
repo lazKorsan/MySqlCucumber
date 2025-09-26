@@ -3,6 +3,7 @@ package stepdefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import manageQueries.LoantechQueries;
 import org.testng.Assert;
 import utilities.DatabaseUtility;
 import utilities.JDBCReusableMethods;
@@ -102,12 +103,36 @@ public class loantechStepdefinitions {
 
 
     @Given("kullanıcı bazi testler yapar")
-    public void kullanıcıBaziTestlerYapar() {
+    public void kullanıcıBaziTestlerYapar() throws SQLException {
 
         DatabaseUtility.createConnection();
-        String query = "update users set username = 'darkdark' where  username ='Darkdark';";
-        DatabaseUtility.executeQuery(query);
+        // < -- ===vvvvvv birinci kısım tabloda var olan veriyi çekmekliklik
+        String Isimsorgusu = LoantechQueries.usersTablosundaUsernamedenSoyisimSorgusu("darkdark");
+        //JDBCReusableMethods.executeMyQuery(soyisimSorgusu);
+        resultSet = JDBCReusableMethods.executeMyQuery(Isimsorgusu);
+        resultSet.next(); // ilk satırı atlatıp ikinci değeri almakliklik
 
-        DatabaseUtility.closeConnection();
+        String eskiIsim = resultSet.getString("username");
+
+        // < -- === vvv update sorgusu başlıyor
+
+        // sorgu hazırlanır
+        String updateIsimSorgusu =
+                LoantechQueries
+                        .usersTablosundaSoyismiUpdateEtmeSorgusu(eskiIsim,eskiIsim.toUpperCase());
+
+        // SORGUYU çalıştırmaklıklık
+        JDBCReusableMethods.executeMyUpdateQuery(updateIsimSorgusu);
+
+        resultSet = JDBCReusableMethods.executeMyQuery(updateIsimSorgusu);
+        resultSet.next();
+        String yeniIsim = resultSet.getString("username");
+
+        Assert.assertEquals(yeniIsim, eskiIsim.toUpperCase(),"dönüşüm başarısız ");
+
+
+
+
+
     }
 }
