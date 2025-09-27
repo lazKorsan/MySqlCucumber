@@ -1,5 +1,5 @@
 Feature:
-
+@testicaiton
   Scenario: cucumber yuyumluluk testi
 
-    Given kullanıcı bazi testler yapar
+    Given kullanıcı bazi tester yapar

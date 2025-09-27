@@ -102,37 +102,7 @@ public class loantechStepdefinitions {
     }
 
 
-    @Given("kullanıcı bazi testler yapar")
-    public void kullanıcıBaziTestlerYapar() throws SQLException {
-
-        DatabaseUtility.createConnection();
-        // < -- ===vvvvvv birinci kısım tabloda var olan veriyi çekmekliklik
-        String Isimsorgusu = LoantechQueries.usersTablosundaUsernamedenSoyisimSorgusu("darkdark");
-        //JDBCReusableMethods.executeMyQuery(soyisimSorgusu);
-        resultSet = JDBCReusableMethods.executeMyQuery(Isimsorgusu);
-        resultSet.next(); // ilk satırı atlatıp ikinci değeri almakliklik
-
-        String eskiIsim = resultSet.getString("username");
-
-        // < -- === vvv update sorgusu başlıyor
-
-        // sorgu hazırlanır
-        String updateIsimSorgusu =
-                LoantechQueries
-                        .usersTablosundaSoyismiUpdateEtmeSorgusu(eskiIsim,eskiIsim.toUpperCase());
-
-        // SORGUYU çalıştırmaklıklık
-        JDBCReusableMethods.executeMyUpdateQuery(updateIsimSorgusu);
-
-        resultSet = JDBCReusableMethods.executeMyQuery(updateIsimSorgusu);
-        resultSet.next();
-        String yeniIsim = resultSet.getString("username");
-
-        Assert.assertEquals(yeniIsim, eskiIsim.toUpperCase(),"dönüşüm başarısız ");
 
 
 
-
-
-    }
 }

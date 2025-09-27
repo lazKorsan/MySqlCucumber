@@ -6,7 +6,7 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(
         features = "src/test/resources", // Özellik dosyalarınızın yolu
         glue = "stepdefinitions", // Adım tanımları ve hooks class'inin oldugu paketiniz
-        tags = "@testerTest", // Çalıştırılacak testlerin etiketleri
+        tags = "@testetreee", // Çalıştırılacak testlerin etiketleri
         plugin = {"pretty",
                 "html:target/cucumber-reports.html",
                 "json:target/cucumber.json"},
